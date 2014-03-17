@@ -17,15 +17,15 @@ public class Grade {
     
     public static void main(String... args) {
         if (args.length > 0) {
-            questions = new HashMap<String, ArrayList<String>>();
-            parseArgs(args);
+            gradeFile(args[0]);
         } else {
             Quiz.printUsage(USAGE);
         }
     }
 
-    private static void parseArgs(String[] args) {
-        BufferedReader file = Quiz.getFile(args[0]);
+    protected static void gradeFile(String ansFile) {
+        questions = new HashMap<String, ArrayList<String>>();
+        BufferedReader file = Quiz.getFile(ansFile);
         ArrayList<String> participants = new ArrayList<String>();
         try {
             String line = file.readLine();
@@ -54,7 +54,7 @@ public class Grade {
                 }
                 line = file.readLine();
             }
-            String filename = makeName(args[0]);
+            String filename = makeName(ansFile);
             createGradedFile(participants, filename);
         } catch (IOException io) {
             System.err.println("Something went wrong!!!");
@@ -78,12 +78,14 @@ public class Grade {
 
     private static void createGradedFile(ArrayList<String> participants, String filename) {
         StringBuilder str = new StringBuilder();
-        str.append("Participants:");
-        for (String name : participants) {
-            str.append(" " + name + ",");
+        if (participants.size() > 0) {
+            str.append("Participants:");
+            for (String name : participants) {
+                str.append(" " + name + ",");
+            }
+            str.deleteCharAt(str.length() - 1);
+            str.append("\n\n");
         }
-        str.deleteCharAt(str.length() - 1);
-        str.append("\n");
         try {
             FileWriter file = new FileWriter(filename);
             file.write(str.toString());

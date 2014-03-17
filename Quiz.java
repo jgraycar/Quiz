@@ -49,25 +49,35 @@ public class Quiz {
         boolean create = true;
         boolean take = false;
         boolean anon = false;
+        boolean grade = false;
         boolean givenFile = false;
         for (String arg : args) {
             switch (arg) {
             case "-c":
                 create = true;
                 take = false;
+                grade = false;
                 break;
             case "-t":
                 take = true;
                 create = false;
+                grade = false;
                 break;
             case "-a":
                 anon = true;
                 break;
+            case "-g":
+                grade = true;
+                create = false;
+                take = false;
+                break;
             default:
                 givenFile = true;
-                if (create) {
+                if (grade) {
+                    Grade.gradeFile(arg);
+                } else if (create) {
                     createQuiz(arg, anon);
-                } else {
+                } else if (take) {
                     takeQuiz(arg, anon);
                 }
             }
