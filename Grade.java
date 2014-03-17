@@ -125,8 +125,7 @@ public class Grade {
         return str.toString();
     }
 
-    /** Keys are question numbers, values are number of people who answered.
-     *  Answers in form "B: 2", ie 2 people answered with B.
+    /** Keys are question numbers + ".", values are lists of the answers for that question.
      */
     private static HashMap<String, ArrayList<String>> questions;
     
