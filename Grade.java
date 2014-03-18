@@ -115,10 +115,15 @@ public class Grade {
                 answers.put(c, num);
             }
             Set<Character> letters = answers.keySet();
-            for (Character c : letters) {
-                str.append(TAB);
-                str.append(c + ": ");
-                str.append(answers.get(c) + "\n");
+            char curChar = 'A';
+            while (answers.size() > 0) {
+                if (answers.containsKey(curChar)) {
+                    str.append(TAB);
+                    str.append(curChar + ": ");
+                    str.append(answers.get(curChar) + "\n");
+                    answers.remove(curChar);
+                }
+                curChar += 1;
             }
             qNum += 1;
         }
