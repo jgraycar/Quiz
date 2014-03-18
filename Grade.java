@@ -9,6 +9,7 @@ import java.lang.StringBuilder;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 
 public class Grade {
 
@@ -113,12 +114,11 @@ public class Grade {
                 }
                 answers.put(c, num);
             }
-            char curChar = 'A';
-            while (answers.containsKey(curChar)) {
+            Set<Character> letters = answers.keySet();
+            for (Character c : letters) {
                 str.append(TAB);
-                str.append(curChar + ": ");
-                str.append(answers.get(curChar) + "\n");
-                curChar += 1;
+                str.append(c + ": ");
+                str.append(answers.get(c) + "\n");
             }
             qNum += 1;
         }
