@@ -46,48 +46,53 @@ public class Quiz {
     }
 
     private static void parseArgs(String[] args) {
-        boolean create = true;
-        boolean take = false;
+        String action = "create";
         boolean anon = false;
-        boolean grade = false;
         boolean givenFile = false;
         for (String arg : args) {
             switch (arg) {
             case "-c":
-                create = true;
-                take = false;
-                grade = false;
+                action = "create";
                 break;
             case "-t":
-                take = true;
-                create = false;
-                grade = false;
+                action = "take";
                 break;
             case "-a":
                 anon = true;
                 break;
             case "-g":
-                grade = true;
-                create = false;
-                take = false;
+                action = "grade";
+                break;
+            case "-d":
+                action = "data";
                 break;
             default:
                 givenFile = true;
-                if (grade) {
-                    Grade.gradeFile(arg);
-                } else if (create) {
-                    createQuiz(arg, anon);
-                } else if (take) {
-                    takeQuiz(arg, anon);
-                }
+                doAction(action, arg, anon);
             }
         }
         if (!givenFile) {
-            if (create) {
-                createQuiz("quiz", anon);
-            } else {
-                takeQuiz("quiz.qz", anon);
-            }
+            System.err.println("Error: no file inputted.");
+            System.exit(1);
+        }
+    }
+
+    private static void doAction(String action, String arg, boolean anon) {
+        switch (action) {
+        case "grade":
+            Grade.gradeFile(arg);
+            break;
+        case "create":
+            createQuiz(arg, anon);
+            break;
+        case "take":
+            takeQuiz(arg, anon);
+            break;
+        case "data":
+            Grade.dataFile(arg);
+            break;
+        default:
+            break;
         }
     }
 

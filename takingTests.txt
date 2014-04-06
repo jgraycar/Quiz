@@ -1,0 +1,2 @@
+
+While taking a quiz, the only acceptable responses to a question are the letters of the choices displayed for each question, in upper- or lower-case. To exit a quiz prematurely, enter the "quit" command.

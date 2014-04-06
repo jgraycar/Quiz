@@ -17,14 +17,53 @@ public class Grade {
     static final String TAB = "   ";
     
     public static void main(String... args) {
+        boolean data = false;
+        boolean grade = true;
+        boolean gotFile = false;
         if (args.length > 0) {
-            gradeFile(args[0]);
+            for (String arg : args) {
+                switch(arg) {
+                case "-d":
+                    data = true;
+                    grade = false;
+                    break;
+                case "-g":
+                    data = false;
+                    grade = true;
+                    break;
+                default:
+                    gotFile = true;
+                    if (data) {
+                        dataFile(arg);
+                    } else if (grade) {
+                        gradeFile(arg);
+                    }
+                    break;
+                }
+            }
+            if (!gotFile) {
+                System.err.println("Error: no file inputted.");
+                System.exit(1);
+            }
         } else {
             Quiz.printUsage(USAGE);
         }
     }
 
     protected static void gradeFile(String ansFile) {
+        String[] fileParts = ansFile.split("\\.");
+        fileParts[fileParts.length - 1] = "sol";
+        StringBuilder str = new StringBuilder();
+        str.append(fileParts[0]);
+        for (int i = 1; i < fileParts.length; i += 1) {
+            str.append(".");
+            str.append(fileParts[1]);
+        }
+        BufferedReader solFile = Quiz.getFile(str.toString());
+        BufferedReader file = Quiz.getFile(ansFile);
+    }
+
+    protected static void dataFile(String ansFile) {
         questions = new HashMap<String, ArrayList<String>>();
         BufferedReader file = Quiz.getFile(ansFile);
         ArrayList<String> participants = new ArrayList<String>();
