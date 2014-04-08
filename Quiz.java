@@ -19,29 +19,11 @@ import java.lang.StringBuilder;
 
 public class Quiz {
 
-    static final String USAGE = "/Users/Joel/CompSci/qz/Usage.txt";
-    static final String TEST_USAGE = "/Users/Joel/CompSci/qz/takingTests.txt";
-
-    protected static void printUsage(String file) {
-        try {
-            FileReader help = new FileReader(new File(file));
-            StringBuilder str = new StringBuilder();
-            for (int c = help.read(); c != -1; c = help.read()) {
-                str.append(Character.toChars(c)[0]);
-            }
-            System.out.println(str.toString());
-        } catch (IOException io) {
-            System.out.println("Error occured while retrieving usage file.");
-            System.exit(1);
-        }
-    }
-        
-
     public static void main(String... args) {
         if (args.length > 0) {
             parseArgs(args);
         } else {
-            printUsage(USAGE);
+            Usage.printQuizUsage();
         }
     }
 
@@ -245,13 +227,13 @@ public class Quiz {
                 System.out.println("Goodbye.");
                 System.exit(0);
             } else if (answer.equals("help")) {
-                printUsage(TEST_USAGE);
+                Usage.printTestUsage();
             } else {
                 System.out.println("Error: " + answer
                                    + " is not a valid response.");
                 errs += 1;
                 if (errs > 3) {
-                    printUsage(TEST_USAGE);
+                    Usage.printTestUsage();
                     errs = 0;
                 }
             }

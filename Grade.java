@@ -46,7 +46,7 @@ public class Grade {
                 System.exit(1);
             }
         } else {
-            Quiz.printUsage(USAGE);
+            Usage.printGradeUsage();
         }
     }
 
