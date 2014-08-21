@@ -1,2 +1,6 @@
 # Ignore Java class files
 *.class
+
+# Ignore build and distribution directories
+build/
+dist/

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Quiz" default="compile" basedir=".">
+  <description>
+    Build file for Quiz
+  </description>
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="target" location="target"/>
+  <property name="dist" location="dist"/>
+  <property name="Main-Class" value="qz.Quiz"/>
+  <property name="volname" value="Quiz"/>
+
+  <target name="init">
+    <!-- Create time stamp -->
+    <tstamp/>
+    <!-- Create build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+  </target>
+
+  <target name="compile" depends="init"
+          description="compile source">
+    <!-- Compile java code from ${src} into ${build} -->
+    <javac includeantruntime="false" srcdir="${src}/java" destdir="${build}"/>
+  </target>
+
+  <target name="jar" depends="compile"
+          description="generate the distribution jar file" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}/lib"/>
+    <!-- Put everything in ${build} and resources into Quiz.jar file -->
+    <jar jarfile="${dist}/lib/${volname}.jar">
+      <fileset dir="${build}"/>
+      <fileset dir="${src}/resources"/>
+      <manifest>
+        <attribute name="Main-Class" value="${Main-Class}"/>
+        <attribute name="Built-By" value="${builder}"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="run-jar" depends="jar"
+          description="creates and runs the distribution jar file">
+    <java jar="${dist}/lib/${volname}.jar" fork="true"/>
+  </target>
+
+  <target name="clean"
+          description="removes all non-source directories">
+    <!-- Delete all build and distribution files / directories -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+
+</project>
